@@ -16,6 +16,7 @@ Table accounts as A {
 
   Indexes {
     owner
+    (owner, currency) [unique]
   }
 }
 
