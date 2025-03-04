@@ -1,0 +1,41 @@
+Table users as U {
+  id               bigserial [pk]
+  username         varchar [unique, not null]
+  hashed_password  varchar [not null]
+  full_name        varchar [not null]
+  email            varchar [unique, not null]
+  created_at       timestamptz [not null, default: `now()`]
+}
+
+Table students {
+  id         bigserial [pk]
+  user_id    bigint [ref: > U.id, unique, not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    user_id
+  }
+}
+
+Table teachers {
+  id         bigserial [pk]
+  user_id    bigint [ref: > U.id, unique, not null]
+  bio        text
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    user_id
+  }
+}
+
+Table courses {
+  id          bigserial [pk]
+  title       varchar [not null]
+  description text
+  teacher_id  bigint [ref: > teachers.id, not null]
+  created_at  timestamptz [not null, default: `now()`]
+
+  Indexes {
+    teacher_id
+  }
+}
